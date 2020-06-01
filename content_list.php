@@ -5,8 +5,8 @@
   $login_check=TRUE;
  }
  $sql = "SELECT * FROM d1_list";
- $post=$_GET['idx'];
- settype($post,"int");
+ $num=$_GET['idx'];
+ settype($num,"int");
  $result = mysqli_query($conn,$sql);
  $list='';
  $article = array(
@@ -26,8 +26,8 @@
  $update_link = '';
  $delete_link = '';
  $comment_table = '';
- if(isset($post)){
-    $sql= "SELECT * FROM d1_list WHERE idx={$post}" ;
+ if(isset($num)){
+    $sql= "SELECT * FROM d1_list WHERE idx={$num}" ;
     $result = mysqli_query($conn,$sql);
     $row=mysqli_fetch_array($result);
     $article['title']=$row['title'];
@@ -36,13 +36,12 @@
 
     if(isset($_SESSION['name'])&&$_SESSION['name'] == $article['author']){
         $update_link = '<a href="update.php?id='.$_GET['idx'].'"style="white-space:nowrap;">update</a>';
-         $delete_link = ' <form action = "delete.php" method ="post">
-    <input type="hidden" name="idx" value="'.$_GET['idx'].'">
-    <input type="submit" value="deleted">
-    </form>';
-
+        $delete_link = '<form action = "delete.php" method ="post">
+         <input type="hidden" name="idx" value="'.$_GET['idx'].'">
+         <input type="submit" value="deleted">
+         </form>'
     }
-    $c_sql = "select * from d1_comment where post_idx={$post}";
+    $c_sql = "select * from d1_comment where post_idx={$num}";
     $result_comment = mysqli_query($conn, $c_sql);
     $c_table ='';
     
